@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registration Form</h1>
+    <form id="registrationForm">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <span class="error" id="usernameError"></span>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <span class="error" id="emailError"></span>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <span class="error" id="passwordError"></span>
+        </div>
+        <div>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword">
+            <span class="error" id="confirmPasswordError"></span>
+        </div>
+        <div>
+            <input type="submit" value="Register">
+        </div>
+    </form>
+
+    <script>
+        const registrationForm = document.getElementById("registrationForm");
+        const username = document.getElementById("username");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+
+        const usernameError = document.getElementById("usernameError");
+        const emailError = document.getElementById("emailError");
+        const passwordError = document.getElementById("passwordError");
+        const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+        registrationForm.addEventListener("submit", function (event) {
+            let isValid = true;
+
+            // Username validation (non-empty)
+            if (username.value.trim() === "") {
+                usernameError.textContent = "Username is required";
+                isValid = false;
+            } else {
+                usernameError.textContent = "";
+            }
+
+            // Email validation (non-empty and valid format)
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (email.value.trim() === "") {
+                emailError.textContent = "Email is required";
+                isValid = false;
+            } else if (!emailPattern.test(email.value)) {
+                emailError.textContent = "Invalid email format";
+                isValid = false;
+            } else {
+                emailError.textContent = "";
+            }
+
+            // Password validation (non-empty)
+            if (password.value === "") {
+                passwordError.textContent = "Password is required";
+                isValid = false;
+            } else {
+                passwordError.textContent = "";
+            }
+
+            // Confirm Password validation (match with password)
+            if (confirmPassword.value !== password.value) {
+                confirmPasswordError.textContent = "Passwords do not match";
+                isValid = false;
+            } else {
+                confirmPasswordError.textContent = "";
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // Prevent form submission if there are errors
+            }
+        });
+    </script>
+</body>
+</html>
